@@ -14,6 +14,6 @@ import org.junit.runner.RunWith
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
-        yzLoge("111aaa2b3c4d".yzIsIncludeDigit())
+
     }
 }
