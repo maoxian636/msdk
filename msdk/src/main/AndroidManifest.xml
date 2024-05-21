@@ -3,7 +3,13 @@
 
     <application>
         <activity
-            android:name=".EEEMainActivity"
+            android:name=".ui.XNewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.XWebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.XStartMainActivity"
             android:exported="false" />
     </application>
 
