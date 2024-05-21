@@ -1,4 +1,4 @@
-package com.yangzai.superutils
+package com.msdk.xsdk
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 

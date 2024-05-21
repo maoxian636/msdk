@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "yz-utils"
 include ':app'
-include ':superutils'
+include ':msdk'

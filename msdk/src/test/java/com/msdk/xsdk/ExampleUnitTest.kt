@@ -1,4 +1,4 @@
-package com.yangzai.superutils
+package com.msdk.xsdk
 
 import org.junit.Test
 

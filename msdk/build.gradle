@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.yangzai.superutils'
+    namespace 'com.msdk.xsdk'
     compileSdk 34
 
     defaultConfig {
@@ -46,9 +46,9 @@ afterEvaluate {
     android.libraryVariants.each {variant->
         publishing.publications.create(variant.name,MavenPublication){
             from components.findByName(variant.name)
-            groupId = 'com.yangzaiarea'
-            artifactId = 'yzutils'
-            version = '1.0.0'
+            groupId = 'com.msdk'
+            artifactId = 'msdkutils'
+            version = '1.0.1'
         }
     }
 }
