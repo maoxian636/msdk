@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.yangzai.superutils'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.activity:activity:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+afterEvaluate {
+    android.libraryVariants.each {variant->
+        publishing.publications.create(variant.name,MavenPublication){
+            from components.findByName(variant.name)
+            groupId = 'com.yangzaiarea'
+            artifactId = 'yzutils'
+            version = '1.0.0'
+        }
+    }
+}
+
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                // Applies the component for the release build variant.
+//                from components.release
+//
+//                // You can then customize attributes of the publication as shown below.
+//                groupId = 'com.yangzaiarea.superapp'
+//                artifactId = 'yzutils'
+//                version = '1.0.0'
+//            }
+//        }
+//    }
+
