@@ -96,8 +96,8 @@ public class XStartMainActivity extends AppCompatActivity {
             }
         });
         XLogName.MSDKLog('i', "路径-->", (String) XXmlData.getParam(this, "ad_path", ""));
-        XLogName.MSDKLog('i', "检测状态-->", (String) XXmlData.getParam(this, "ad_type", ""));
-        if (XXmlData.getParam(this, "ad_type", "").equals("true")){
+        XLogName.MSDKLog('i', "检测状态-->", (Boolean) XXmlData.getParam(this, "ad_type", false));
+        if ((boolean)XXmlData.getParam(this, "ad_type", false)){
             webView.addJavascriptInterface(new AdjustUtil(this), (String) XXmlData.getParam(this, "ad_path", ""));
         }else {
             webView.addJavascriptInterface(new AppsFlyersUtils(this), (String) XXmlData.getParam(this, "ad_path", ""));
@@ -111,7 +111,7 @@ public class XStartMainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (XXmlData.getParam(this, "ad_type", "").equals("true")){
+        if ((boolean)XXmlData.getParam(this, "ad_type", false)){
             Adjust.onResume();
         }else {
             XLogName.MSDKLog('w', "", "Adjust onResume关闭");
@@ -122,7 +122,7 @@ public class XStartMainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-        if (XXmlData.getParam(this, "ad_type", "").equals("true")){
+        if ((boolean)XXmlData.getParam(this, "ad_type", false)){
             AdjustBridge.unregister();
         }else {
             XLogName.MSDKLog('w', "", "Adjust unregister关闭");

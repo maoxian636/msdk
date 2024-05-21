@@ -11,6 +11,7 @@ import com.adjust.sdk.AdjustConfig;
 import com.adjust.sdk.AdjustEvent;
 import com.msdk.xsdk.bean.XLogName;
 import com.msdk.xsdk.ui.XNewActivity;
+import com.msdk.xsdk.utils.XXmlData;
 
 import org.json.JSONObject;
 
@@ -90,9 +91,18 @@ public class AdjustUtil {
                 Object value = json.get(key);
                 jsonObject.put(key, value);
             }
-            if (name.equals("register")) {
-                Adjust.trackEvent(new AdjustEvent("6proqq"));
+            Map<String, String> adEvent = XXmlData.getMap(context, "ad_event");
+            if (adEvent==null){
+                XLogName.MSDKLog('e', "adjust --->", "事件数据为空");
+                return;
             }
+            XLogName.MSDKLog('i', "adjust--->",name+"------"+ adEvent.get(name));
+
+//            if (name.equals("recharge")||name.equals("firstrecharge")) {
+//                setADConfig(adEvent.get(name));
+//            }else {
+//                Adjust.trackEvent(new AdjustEvent(adEvent.get(name)));
+//            }
 
         } catch (Exception e) {
 
@@ -105,7 +115,6 @@ public class AdjustUtil {
         String amount = (String) jsonObject.get("amount");
         adjustEvent.setRevenue(Double.valueOf(amount), currency);
         Adjust.trackEvent(adjustEvent);
-        Log.d("mao", token);
     }
 
 

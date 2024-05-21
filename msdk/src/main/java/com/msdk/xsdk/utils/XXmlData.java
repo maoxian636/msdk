@@ -5,6 +5,12 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class XXmlData {
     private static final String FILE_NAME = "MSDK";
@@ -74,4 +80,39 @@ public class XXmlData {
         return (currentTime - savedTime) > fiveMinutesInMillis;
     }
 
+
+    /**
+     * 存储Map集合
+     * @param key 键
+     * @param map 存储的集合
+     * @param <K> 指定Map的键
+     * @param <T> 指定Map的值
+     */
+    public static  <K,T> void setMap(Context context,String key , Map<K,T> map){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MSDK_MAP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (map == null || map.isEmpty() || map.size() < 1){
+            return;
+        }
+
+        Gson gson = new Gson();
+        String strJson  = gson.toJson(map);
+        editor.clear();
+        editor.putString(key ,strJson);
+        editor.commit();
+    }
+    /**
+     * 获取Map集合
+     * */
+    public static <K,T> Map<K,T> getMap(Context context,String key){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MSDK_MAP", MODE_PRIVATE);
+        Map<K,T> map = new HashMap<>();
+        String strJson = sharedPreferences.getString(key,null);
+        if (strJson == null){
+            return map;
+        }
+        Gson gson = new Gson();
+        map = gson.fromJson(strJson,new TypeToken<Map<K,T> >(){}.getType());
+        return map;
+    }
 }

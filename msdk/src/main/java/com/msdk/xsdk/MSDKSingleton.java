@@ -8,7 +8,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.msdk.xsdk.bean.XConfigData;
+import com.msdk.xsdk.bean.XJsonData;
 import com.msdk.xsdk.bean.XLogName;
 import com.msdk.xsdk.bean.XMSDKData;
 import com.msdk.xsdk.detection.AdjustUtil;
@@ -24,6 +27,8 @@ import com.msdk.xsdk.utils.XXmlData;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -38,6 +43,7 @@ public class MSDKSingleton {
     private static MSDKSingleton msdkSingleton;
     private static XConfigData configData;
     private Activity activity;
+
     private MSDKSingleton(Activity activity) {
         this.activity = activity;
     }
@@ -156,7 +162,7 @@ public class MSDKSingleton {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     try {
-                        XLogName.MSDKLog('e', "", "请求失败-->"+e.getMessage());
+                        XLogName.MSDKLog('e', "", "请求失败-->" + e.getMessage());
                         Thread.sleep(1000);
                         initConfig();
                     } catch (XException ex) {
@@ -179,27 +185,34 @@ public class MSDKSingleton {
                         JSONObject jsonObject = new JSONObject(json);
                         String data = jsonObject.getString(configData.getUsername());
 //                      adjust  appsflyer
-                        XLogName.MSDKLog('i', "后台测试数据-->", data);
-                        String[] split = data.split("\\|");
-                        if (!TextUtils.isEmpty(split[0])) {
-                            XXmlData.setParam(activity, "ad_type", split[0]);
-                            XXmlData.setParam(activity, "ad_path", split[2]);
-                            if (split[0].equals("true")) {
+                        XJsonData xJsonData = new Gson().fromJson(data, XJsonData.class);
+                        XLogName.MSDKLog('d', "xJsonData-----后台测试数据-->", xJsonData);
+
+
+                        if (xJsonData != null) {
+                            XXmlData.setParam(activity, "ad_type", xJsonData.getMonitorType());
+                            XXmlData.setParam(activity, "ad_path", xJsonData.getMonitorPath());
+
+                            if (xJsonData.getMonitorType()) {
+                                setAdEnve(xJsonData);
                                 AdjustUtil adjustUtil = new AdjustUtil(activity);
-                                adjustUtil.setADConfig(split[1]);
+                                adjustUtil.setADConfig(xJsonData.getMonitorKey());
+
                             } else {
                                 AppsFlyersUtils appsFlyersUtils = new AppsFlyersUtils(activity);
-                                appsFlyersUtils.setAppsFlyerConfig(split[1]);
+                                appsFlyersUtils.setAppsFlyerConfig(xJsonData.getMonitorKey());
                             }
+
                             mHandler.sendEmptyMessage(0);
+
                         } else {
-                            XLogName.MSDKLog('e', "", "后台输入错误,检测不能为空");
+                            XLogName.MSDKLog('e', "", "后台输入错误,监测不能为空");
                         }
 
 
                     } catch (Exception e) {
                         try {
-                            XLogName.MSDKLog('e', "", "数据异常错误-->"+e.getMessage());
+                            XLogName.MSDKLog('e', "", "数据异常错误-->" + e.getMessage());
                             initConfig();
                         } catch (XException ex) {
                             throw new RuntimeException(ex);
@@ -213,6 +226,19 @@ public class MSDKSingleton {
             throw new XException("未进行数据配置，请先进行数据配置，使用setMSDKConfig方法！！！");
         }
 
+
+    }
+
+    private void setAdEnve(XJsonData xJsonData) {
+        if (xJsonData.getAdjust().size()>0){
+            Map<String, String> map = new HashMap<>();
+            for (int i = 0; i < xJsonData.getAdjust().size(); i += 2) {
+                map.put(xJsonData.getAdjust().get(i), xJsonData.getAdjust().get(i + 1));
+            }
+            XXmlData.setMap(activity, "ad_event", map);
+        }else {
+            XLogName.MSDKLog('e', "event", "后台输入错误,事件不能为空");
+        }
 
     }
 }
