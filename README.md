@@ -36,14 +36,17 @@ dependencies {
 ```
 ### 2. 后台数据格式
 数据需要转义，然后去掉空格
-|monitorType |true 表示Adjust     |
-|----------- |false 表示Appsflyer |
-|monitorName |表示监控名称          |
-|monitorKey  |表示监控key          |
-|monitorPath |表示js交互路径        |
-|adjust      |表示需要监控的点击事件   |
-|----------- |偶数是事件名|
-|----------- |奇数是对应的事件上报key|
+
+| 返回key      | 含义            |
+|--------------|---------------|
+| monitorType  | true 表示Adjust |
+| ----------- |false 表示Appsflyer   |
+| monitorName |表示监控名称  |
+| monitorKey  |表示监控key |
+| monitorPath |表示js交互路径  |
+| adjust      |表示需要监控的点击事件  |
+|----------- |偶数是事件名 |
+| ----------- |奇数是对应的事件上报key|
 ```
 {
 	"monitorType": true,
