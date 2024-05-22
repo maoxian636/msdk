@@ -53,6 +53,6 @@ dependencies {
 	"monitorName": "adjust",
 	"monitorKey": "so5p7fwr25mo",
 	"monitorPath": "jsBridge",
-	"adjust": {"recharge":"az5acd","register":"k4ujxh","rechargeClick":"ro2yy7","firstrecharge":"gpe2wi"}
+	"adjust": ["recharge","az5acd","register","k4ujxh","rechargeClick","ro2yy7","firstrecharge","gpe2wi"]
 }
 ```
