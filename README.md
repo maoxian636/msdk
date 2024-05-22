@@ -25,7 +25,7 @@ dependencies {
 ## 使用教程
 
 ### 1. 初始化
-XConfigData传参
+XConfigData传参数据
 
 | First Header  | Second Header   |
 | ------------- |-----------------|
