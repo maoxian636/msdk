@@ -1,5 +1,6 @@
 package com.msdk.xsdk.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;

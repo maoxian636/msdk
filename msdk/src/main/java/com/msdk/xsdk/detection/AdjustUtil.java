@@ -19,9 +19,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class AdjustUtil {
+public class AdjustUtil extends ConfigData {
     private Activity context;
 
+    private Map<String, String> adEvent = new HashMap<>();
 
     public AdjustUtil(Activity context) {
         this.context = context;
@@ -45,6 +46,7 @@ public class AdjustUtil {
 
 
         Adjust.onCreate(config);
+
 
 
 //            context.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
@@ -74,14 +76,37 @@ public class AdjustUtil {
 
     }
 
+    /**
+     * skywinApp
+     * @param eventName
+     */
+    @JavascriptInterface
+    public void onEvent(String eventName) {
+        adEvent = XXmlData.getMap(context, "ad_event");
+        XLogName.MSDKLog('i', "adjust---onEvent", eventName);
+        XLogName.MSDKLog('i', "adjust---onEvent", adEvent.get(eventName));
+        Adjust.trackEvent(new AdjustEvent(adEvent.get(eventName)));
+    }
+    @JavascriptInterface
+    public void onEvent(String eventName,String amount,String currency){
+        adEvent = XXmlData.getMap(context, "ad_event");
+        XLogName.MSDKLog('i', "adjust---onEvent", eventName+"----"+amount+"----"+currency);
+        AdjustEvent adjustEvent = new AdjustEvent(adEvent.get(eventName));
+        adjustEvent.setRevenue(Double.valueOf(amount), currency);
+        Adjust.trackEvent(adjustEvent);
+    }
+
+    /**
+     * jsBridge
+     *
+     * @param name
+     * @param data
+     */
+
     @JavascriptInterface
     public void postMessage(String name, String data) {
-        XLogName.MSDKLog('i', "adjust", name + "----" + data);
-        if ("openWindow".equals(name)) {
-            Intent intent = new Intent(context, XNewActivity.class);
-            intent.putExtra("data", data);
-            context.startActivityForResult(intent, 1);
-        }
+        XLogName.MSDKLog('i', "adjust---postMessage", name + "----" + data);
+        toOtherView(context, name, data);
         try {
             Map<String, Object> jsonObject = new HashMap<>();
             JSONObject json = new JSONObject(data);
@@ -91,18 +116,17 @@ public class AdjustUtil {
                 Object value = json.get(key);
                 jsonObject.put(key, value);
             }
-            Map<String, String> adEvent = XXmlData.getMap(context, "ad_event");
-            if (adEvent==null){
+            adEvent = XXmlData.getMap(context, "ad_event");
+            if (adEvent == null) {
                 XLogName.MSDKLog('e', "adjust --->", "事件数据为空");
                 return;
             }
-            XLogName.MSDKLog('i', "adjust--->",name+"------"+ adEvent.get(name));
 
-//            if (name.equals("recharge")||name.equals("firstrecharge")) {
-//                setADConfig(adEvent.get(name));
-//            }else {
-//                Adjust.trackEvent(new AdjustEvent(adEvent.get(name)));
-//            }
+            if (name.equals(getRECHARGE()) || name.equals(getFIRST_RECHARGE())) {
+                setAdjData(jsonObject, adEvent.get(name));
+            } else {
+                Adjust.trackEvent(new AdjustEvent(adEvent.get(name)));
+            }
 
         } catch (Exception e) {
 
@@ -110,9 +134,10 @@ public class AdjustUtil {
     }
 
     private void setAdjData(Map<String, Object> jsonObject, String token) {
+        XLogName.MSDKLog('i', "adjust --->", "token-->:" + token + "---jsonObject--->:" + jsonObject.toString());
         AdjustEvent adjustEvent = new AdjustEvent(token);
-        String currency = (String) jsonObject.get("currency");
-        String amount = (String) jsonObject.get("amount");
+        String currency = (String) jsonObject.get(getCURRENCY());
+        String amount = (String) jsonObject.get(getAMOUNT());
         adjustEvent.setRevenue(Double.valueOf(amount), currency);
         Adjust.trackEvent(adjustEvent);
     }
