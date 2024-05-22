@@ -4,7 +4,7 @@
 AB合集sdk
 
 ## 依赖
-<details>
+
 ### 1. 添加仓库  
 ```
 dependencyResolutionManagement {
@@ -21,9 +21,9 @@ dependencies {
 	        implementation 'com.github.maoxian636:msdk:Tag'
 	}   
 ```
-</details>
+
 ## 使用教程
-<details>
+
 ### 1. 初始化
 ```
      try {
@@ -35,7 +35,7 @@ dependencies {
         }
 ```
 ### 2. 后台数据格式
-<summary>数据需要转义，然后去掉空格</summary>
+数据需要转义，然后去掉空格
 monitorType true 表示Adjust   false 表示Appsflyer
 monitorName 表示监控名称
 monitorKey 表示监控key
@@ -50,4 +50,3 @@ adjust 表示需要监控的点击事件 偶数是事件名  奇数是对应的�
 	"adjust": {"recharge":"az5acd","register":"k4ujxh","rechargeClick":"ro2yy7","firstrecharge":"gpe2wi"}
 }
 ```
-</details>
