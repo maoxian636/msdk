@@ -27,12 +27,12 @@ dependencies {
 ### 1. 初始化
 XConfigData传参数据
 
-| First Header  | Second Header   |
-| ------------- |-----------------|
-| requestPath  | 后台输入的接口路径   必须  |
-| username  | 后台创建的用户名     必须 |
-| language  | 后台的语言       可选  |
-| naturalQuantity  | 监测自然量      可选     |
+| 参数名             | 含义              | 条件 |
+|-----------------|-----------------|----|
+| requestPath     | 后台输入的接口路径     |  必须  |
+| username        | 后台创建的用户名      | 必须   |
+| language        | 后台的语言         |  可选  |
+| naturalQuantity | 监测自然量         | 可选  |
 ```
      try {
             MSDKSingleton.getInstance(this).setMSDKConfig(XConfigData("xxxx", "aaaaaa"))
