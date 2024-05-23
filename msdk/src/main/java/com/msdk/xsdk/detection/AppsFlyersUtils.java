@@ -71,7 +71,7 @@ public class AppsFlyersUtils extends ConfigData{
         Map<String, Object> eventValues = new HashMap<String, Object>();
         eventValues.put(AFInAppEventParameterName.CURRENCY, currency);
         eventValues.put(AFInAppEventParameterName.REVENUE, amount);
-        AppsFlyerLib.getInstance().logEvent(context, amount, eventValues, new AppsFlyerRequestListener() {
+        AppsFlyerLib.getInstance().logEvent(context, eventName, eventValues, new AppsFlyerRequestListener() {
             @Override
             public void onSuccess() {
                 XLogName.MSDKLog('d', "AppsFlyerEvent", "successfully--->" + amount);
