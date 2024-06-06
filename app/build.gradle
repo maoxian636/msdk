@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yangzai.superapp'
+    namespace 'com.xzsdk.demotest'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.yangzai.superapp"
+        applicationId "com.xzsdk.demotest"
         minSdk 24
         targetSdk 34
         versionCode 1

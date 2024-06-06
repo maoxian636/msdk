@@ -1,4 +1,4 @@
-package com.yangzai.superapp
+package com.xzsdk.demotest
 
 import org.junit.Test
 

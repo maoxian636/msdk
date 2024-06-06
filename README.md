@@ -1,4 +1,4 @@
-# msdk
+# XZABSdk
 
 ## 项目介绍
 AB合集sdk
