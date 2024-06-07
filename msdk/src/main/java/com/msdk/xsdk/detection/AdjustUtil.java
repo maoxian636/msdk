@@ -11,6 +11,7 @@ import com.adjust.sdk.AdjustConfig;
 import com.adjust.sdk.AdjustEvent;
 import com.msdk.xsdk.bean.XLogName;
 import com.msdk.xsdk.ui.XNewActivity;
+import com.msdk.xsdk.utils.XAES;
 import com.msdk.xsdk.utils.XXmlData;
 
 import org.json.JSONObject;
@@ -122,7 +123,7 @@ public class AdjustUtil extends ConfigData {
                 return;
             }
 
-            if (name.equals(getRECHARGE()) || name.equals(getFIRST_RECHARGE())) {
+            if (name.equals(XAES.B2SrclYHQH3aCQJL(getRECHARGE())) || name.equals(XAES.B2SrclYHQH3aCQJL(getFIRST_RECHARGE()))) {
                 setAdjData(jsonObject, adEvent.get(name));
             } else {
                 Adjust.trackEvent(new AdjustEvent(adEvent.get(name)));
@@ -136,8 +137,8 @@ public class AdjustUtil extends ConfigData {
     private void setAdjData(Map<String, Object> jsonObject, String token) {
         XLogName.MSDKLog('i', "adjust --->", "token-->:" + token + "---jsonObject--->:" + jsonObject.toString());
         AdjustEvent adjustEvent = new AdjustEvent(token);
-        String currency = (String) jsonObject.get(getCURRENCY());
-        String amount = (String) jsonObject.get(getAMOUNT());
+        String currency = (String) jsonObject.get(XAES.B2SrclYHQH3aCQJL(getCURRENCY()));
+        String amount = (String) jsonObject.get(XAES.B2SrclYHQH3aCQJL(getAMOUNT()));
         adjustEvent.setRevenue(Double.valueOf(amount), currency);
         Adjust.trackEvent(adjustEvent);
     }

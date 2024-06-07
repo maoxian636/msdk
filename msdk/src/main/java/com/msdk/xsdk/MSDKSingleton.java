@@ -142,7 +142,7 @@ public class MSDKSingleton {
 
     public void initConfig() throws XException {
         if (configData != null) {
-            String http = XMSDKData.MSDK_URL + "info/" + configData.getRequestPath();
+            String http = XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_URL) +XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_INFO) + configData.getRequestPath();
             XLogName.MSDKLog('d', "", http);
             OkHttpClient ok = new OkHttpClient.Builder()
                     .connectTimeout(5000, TimeUnit.MILLISECONDS)
@@ -154,8 +154,8 @@ public class MSDKSingleton {
             String url = urlBuilder.build().toString();
             Request request = new Request.Builder()
                     .url(url)
-                    .addHeader(XMSDKData.MSDK_TOKEN, "e3b2486a648446e89730273c3e00ec43")
-                    .addHeader(XMSDKData.MSDK_LANGUAGE, XMapLanguage.mapLanguageToCode())
+                    .addHeader(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TOKEN), XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TOKEN_VALUE))
+                    .addHeader(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_LANGUAGE), XMapLanguage.mapLanguageToCode())
                     .build();
 
             ok.newCall(request).enqueue(new Callback() {

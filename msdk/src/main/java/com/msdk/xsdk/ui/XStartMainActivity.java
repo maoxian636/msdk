@@ -23,8 +23,10 @@ import com.adjust.sdk.Adjust;
 import com.adjust.sdk.webbridge.AdjustBridge;
 import com.msdk.xsdk.R;
 import com.msdk.xsdk.bean.XLogName;
+import com.msdk.xsdk.bean.XMSDKData;
 import com.msdk.xsdk.detection.AdjustUtil;
 import com.msdk.xsdk.detection.AppsFlyersUtils;
+import com.msdk.xsdk.utils.XAES;
 import com.msdk.xsdk.utils.XAndroidBug5497WorkaroundUtils;
 import com.msdk.xsdk.utils.XMobilePhoneAdaptation;
 import com.msdk.xsdk.utils.XWebChromeClient;
@@ -64,7 +66,7 @@ public class XStartMainActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                if (url.startsWith("https://t.me/")) {
+                if (url.startsWith(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_ME))) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivity(intent);

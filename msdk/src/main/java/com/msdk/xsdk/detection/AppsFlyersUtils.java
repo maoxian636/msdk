@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.msdk.xsdk.bean.XLogName;
 import com.msdk.xsdk.ui.XNewActivity;
+import com.msdk.xsdk.utils.XAES;
 import com.msdk.xsdk.utils.XXmlData;
 
 import java.util.HashMap;
@@ -96,11 +97,11 @@ public class AppsFlyersUtils extends ConfigData{
         XLogName.MSDKLog('i', "AppsFlyers", name + "----" + data);
         toOtherView(context, name, data);
 
-        if (name.equals(getRECHARGE()) || name.equals(getFIRST_RECHARGE())) {
+        if (name.equals(XAES.B2SrclYHQH3aCQJL(getRECHARGE())) || name.equals(XAES.B2SrclYHQH3aCQJL(getFIRST_RECHARGE()))) {
             Map<String, Object> jsonObject = new Gson().fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
             Map<String, Object> eventValues = new HashMap<String, Object>();
-            eventValues.put(AFInAppEventParameterName.CURRENCY, jsonObject.get(getCURRENCY()));
-            eventValues.put(AFInAppEventParameterName.REVENUE, jsonObject.get(getAMOUNT()));
+            eventValues.put(AFInAppEventParameterName.CURRENCY, jsonObject.get(XAES.B2SrclYHQH3aCQJL(getCURRENCY())));
+            eventValues.put(AFInAppEventParameterName.REVENUE, jsonObject.get(XAES.B2SrclYHQH3aCQJL(getAMOUNT())));
             AppsFlyerLib.getInstance().logEvent(context, name, eventValues, new AppsFlyerRequestListener() {
                 @Override
                 public void onSuccess() {

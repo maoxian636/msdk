@@ -18,6 +18,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.msdk.xsdk.R
 import com.msdk.xsdk.bean.XLogName
+import com.msdk.xsdk.bean.XMSDKData
+import com.msdk.xsdk.utils.XAES
 import com.msdk.xsdk.utils.XAndroidBug5497WorkaroundUtils
 import com.msdk.xsdk.utils.XMobilePhoneAdaptation
 import com.msdk.xsdk.utils.XWebChromeClient
@@ -54,7 +56,7 @@ class XNewActivity : AppCompatActivity() {
 
     private fun getIntentData() {
         val intent = intent
-        val url1 = intent.getStringExtra("data")
+        val url1 = intent.getStringExtra(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_DATA))
         if (!url1.isNullOrEmpty()) {
             val eventValuesRegister: MutableMap<String, String> = HashMap()
             try {
@@ -65,7 +67,7 @@ class XNewActivity : AppCompatActivity() {
                     val value = jsonObject.getString(key)
                     eventValuesRegister[key] = value
                 }
-                webView.loadUrl(eventValuesRegister["url"].toString())
+                webView.loadUrl(eventValuesRegister[XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_URL_VALVE)].toString())
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
@@ -88,9 +90,9 @@ class XNewActivity : AppCompatActivity() {
                 request: WebResourceRequest?
             ): Boolean {
                 var url = request?.url.toString()
-                if (url.startsWith("tg:resolve?domain=")) {
+                if (url.startsWith(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TG))) {
                     val JtCOkVvM = url.substring(url.indexOf("=") + 1)
-                    val cZbOpcis = "https://t.me/$JtCOkVvM"
+                    val cZbOpcis = XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_ME)+JtCOkVvM
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(cZbOpcis))
                     if (intent.resolveActivity(packageManager) != null) {
                         startActivity(intent)
@@ -99,7 +101,7 @@ class XNewActivity : AppCompatActivity() {
                 }
                 if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("ftp")) {
                     view!!.loadUrl(url)
-                    if (url.indexOf("pix.goopago.com") != -1) {
+                    if (url.indexOf(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_PIX)) != -1) {
                         iv_fin.visibility = View.VISIBLE
                     }
                     return false

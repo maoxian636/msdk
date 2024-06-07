@@ -25,7 +25,7 @@ public class XRequestManage {
 
     public static void hander(XConfigData configData, CallbackOne one, CallbackTwo two, CallbackThree three) {
 
-        String http = XMSDKData.MSDK_URL + getRandomString(5)+"/"+configData.getRequestPath();
+        String http = XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_URL) + getRandomString(5)+"/"+configData.getRequestPath();
         XLogName.MSDKLog('d',"",http);
         OkHttpClient ok = new OkHttpClient.Builder()
                 .connectTimeout(5000, TimeUnit.MILLISECONDS)
@@ -37,8 +37,8 @@ public class XRequestManage {
         String url = urlBuilder.build().toString();
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader(XMSDKData.MSDK_TOKEN, "e3b2486a648446e89730273c3e00ec43")
-                .addHeader(XMSDKData.MSDK_LANGUAGE, XMapLanguage.mapLanguageToCode())
+                .addHeader(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TOKEN), XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TOKEN_VALUE))
+                .addHeader(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_LANGUAGE), XMapLanguage.mapLanguageToCode())
                 .build();
 
         ok.newCall(request).enqueue(new Callback() {
@@ -74,9 +74,9 @@ public class XRequestManage {
                         return;
                     }
 
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    JSONArray typesArray = data.getJSONArray("types");
-                    JSONArray ranksArray = data.getJSONArray("ranks");
+                    JSONObject data = jsonObject.getJSONObject(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_DATA));
+                    JSONArray typesArray = data.getJSONArray(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_TYPES));
+                    JSONArray ranksArray = data.getJSONArray(XAES.B2SrclYHQH3aCQJL(XMSDKData.MSDK_RANKS));
                     String josntString = XAES.B2SrclYHQH3aCQJL(data.getString(configData.getUsername()));
 
                     if (TextUtils.isEmpty(josntString)) {
