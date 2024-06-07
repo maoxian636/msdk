@@ -21,6 +21,19 @@ dependencies {
 	        implementation 'com.github.maoxian636:msdk:Tag'
 	}   
 ```
+### 3. 添加权限
+```
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+### 4. 添加清单
+```
+    <application
+        android:usesCleartextTraffic="true"
+        tools:replace="android:fullBackupContent"
+        ......
+        >
+```
 
 ## 使用教程
 
